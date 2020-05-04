@@ -28,7 +28,7 @@ def test_delete_customer_by_id(faker):
     user = get_user(faker)
 
     id = UserApiService().get_id(user)
-    UserApiService().delete_customer_by_id(id) \
+    UserApiService().delete_customer(id) \
         .should_have(status_code(200)) \
         .should_have(body("$.status", True))
 

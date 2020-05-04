@@ -6,7 +6,7 @@ from src.services import CatalogueApiService
 
 
 def test_get_catalogue():
-    CatalogueApiService().get_all_items() \
+    CatalogueApiService().get_all_products() \
         .should_have(status_code(200)) \
         .should_have(body("$..id", has_length(greater_than(0))))
 
@@ -22,7 +22,7 @@ def test_get_item_by_id():
 def test_catalogue_size():
     size = CatalogueApiService().count_all_items()
 
-    CatalogueApiService().get_catalogue_size() \
+    CatalogueApiService().get_products_count() \
         .should_have(status_code(200)) \
         .should_have(body("$.size", size))
 
