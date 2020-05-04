@@ -1,33 +1,53 @@
-from hamcrest import has_length, greater_than, not_
+from hamcrest import has_length, not_
 from hamcrest.library.collection import is_empty
-
-from src.conditions import status_code, body
+import pytest
+from src.conditions import status_code, body, content_type
 from src.services import CatalogueApiService
 
 
-def test_get_catalogue():
+@pytest.mark.api
+@pytest.mark.positive
+def test_get_list_of_products():
     CatalogueApiService().get_all_products() \
         .should_have(status_code(200)) \
-        .should_have(body("$..id", has_length(greater_than(0))))
+        .should_have(content_type("text/plain")) \
+        .should_have(body("$..id", has_length(9))) \
+        .should_have(body("$.[0].name", "Holy"))
 
 
-def test_get_item_by_id():
-    id = CatalogueApiService().get_featured_item_id(1)
+@pytest.mark.api
+@pytest.mark.positive
+def test_get_product():
+    product = CatalogueApiService().get_featured_product(1)
+    print(product)
 
-    CatalogueApiService().get_item_by_id(id) \
+    CatalogueApiService().get_product(product["id"]) \
         .should_have(status_code(200)) \
-        .should_have(body("$.id", id))
+        .should_have(content_type("text/plain")) \
+        .should_have(body("$.id", product["id"])) \
+        .should_have(body("$.name", product["name"])) \
+        .should_have(body("$.description", product["description"])) \
+        .should_have(body("$.price", product["price"])) \
+        .should_have(body("$.count", product["count"]))
 
 
-def test_catalogue_size():
-    size = CatalogueApiService().count_all_items()
+@pytest.mark.api
+@pytest.mark.positive
+def test_get_products_count():
+    size = CatalogueApiService().count_all_products()
 
     CatalogueApiService().get_products_count() \
         .should_have(status_code(200)) \
-        .should_have(body("$.size", size))
+        .should_have(content_type("text/plain")) \
+        .should_have(body("$.size", size)) \
+        .should_have(body("$.err", None))
 
 
-def test_catalogue_tags():
+@pytest.mark.api
+@pytest.mark.positive
+def test_get_products_tags():
     CatalogueApiService().get_tags() \
         .should_have(status_code(200)) \
-        .should_have(body("$.tags", not_(is_empty)))
+        .should_have(content_type("text/plain")) \
+        .should_have(body("$.tags", not_(is_empty))) \
+        .should_have(body("$.tags[*]", has_length(11)))

@@ -16,5 +16,8 @@ class AssertableResponse(object):
         condition.match(self._response)
         return self
 
-    def json(self):
-        return self._response.json()
+    def json(self, name=None):
+        if not name:
+            return self._response.json()
+        else:
+            return self._response.json()[name]

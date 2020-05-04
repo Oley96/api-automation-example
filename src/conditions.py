@@ -46,3 +46,17 @@ class BodyFieldCondition(Condition):
         return f"body field {self._json_path} {self._matcher}"
 
 body = BodyFieldCondition
+
+class ContentTypeCondition(Condition):
+
+    def __init__(self, content_type):
+        super(ContentTypeCondition, self).__init__()
+        self._content_type = content_type
+
+    def __repr__(self):
+        return f"header is {self._content_type}"
+
+    def match(self, response):
+        assert self._content_type in response.headers['Content-Type']
+
+content_type = ContentTypeCondition
