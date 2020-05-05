@@ -1,6 +1,6 @@
 from hamcrest import has_length, greater_than
 import pytest
-from src.conditions import status_code, body, content_type
+from src.conditions import status_code, body, content_type, only_fields
 from src.models import get_user
 from src.services import UserApiService
 
@@ -89,4 +89,5 @@ def test_get_addresses():
         .should_have(content_type("text/plain")) \
         .should_have(body("$._embedded.address[0].street", "my road")) \
         .should_have(body("$._embedded.address[0].country", "UK")) \
-        .should_have(body("$._embedded.address[0].city", "London"))
+        .should_have(body("$._embedded.address[0].city", "London")) \
+        .should_have(only_fields("_embedded"))

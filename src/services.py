@@ -1,9 +1,9 @@
 import base64
 import json
 import os
-from base64 import encode
 
 import allure
+import dotenv
 import jsonpath_rw
 import requests
 
@@ -13,7 +13,8 @@ from src.response import AssertableResponse
 class ApiService(object):
 
     def __init__(self):
-        self._base_url = os.environ['BASE_URL']
+        dotenv.load_dotenv()
+        self._base_url = os.getenv('BASE_URL')
         self._headers = {"content-type": "application/json"}
 
     def _post(self, url, body, cookies=None):
