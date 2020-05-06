@@ -10,9 +10,9 @@ class AssertableResponse(object):
         self._response = response
 
 
-    @allure.step("response should have {condition}")
+    @allure.step("Response should have {condition}")
     def should_have(self, condition):
-        logging.info("About to check " + str(condition))
+        logging.info("Check " + str(condition))
         condition.match(self._response)
         return self
 

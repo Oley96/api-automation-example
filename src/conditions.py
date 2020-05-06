@@ -56,7 +56,7 @@ class ContentTypeCondition(Condition):
         self._content_type = content_type
 
     def __repr__(self):
-        return f"header is {self._content_type}"
+        return f"'{self._content_type}' content type"
 
     def match(self, response):
         assert self._content_type in response.headers['Content-Type']

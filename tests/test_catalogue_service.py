@@ -1,7 +1,7 @@
 from hamcrest import has_length, not_
 from hamcrest.library.collection import is_empty
 import pytest
-from src.conditions import status_code, body, content_type
+from src.conditions import status_code, body, content_type, field_with_value, fields
 from src.services import CatalogueApiService
 
 
@@ -19,16 +19,15 @@ def test_get_list_of_products():
 @pytest.mark.positive
 def test_get_product():
     product = CatalogueApiService().get_featured_product(1)
-    print(product)
 
     CatalogueApiService().get_product(product["id"]) \
         .should_have(status_code(200)) \
         .should_have(content_type("text/plain")) \
-        .should_have(body("$.id", product["id"])) \
-        .should_have(body("$.name", product["name"])) \
-        .should_have(body("$.description", product["description"])) \
-        .should_have(body("$.price", product["price"])) \
-        .should_have(body("$.count", product["count"]))
+        .should_have(field_with_value("id", product["id"])) \
+        .should_have(field_with_value("name", product["name"])) \
+        .should_have(field_with_value("description", product["description"])) \
+        .should_have(field_with_value("price", product["price"])) \
+        .should_have(fields("tag", "count"))
 
 
 @pytest.mark.api
@@ -39,7 +38,7 @@ def test_get_products_count():
     CatalogueApiService().get_products_count() \
         .should_have(status_code(200)) \
         .should_have(content_type("text/plain")) \
-        .should_have(body("$.size", size)) \
+        .should_have(field_with_value("size", size)) \
         .should_have(body("$.err", None))
 
 
