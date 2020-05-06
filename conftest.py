@@ -1,7 +1,7 @@
 import pytest
-from faker import Faker
+from src.models.user import User
 
 
 @pytest.fixture
-def faker():
-    return Faker()
+def fake_user():
+    return User.from_faker().get_user()

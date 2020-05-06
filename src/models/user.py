@@ -1,3 +1,5 @@
+from faker import Faker
+
 
 class User:
 
@@ -6,10 +8,18 @@ class User:
         self.password = password
         self.email = email
 
-    @staticmethod
-    def get_user(faker):
+    @classmethod
+    def from_faker(cls):
+        data = {
+            "username": Faker().name(),
+            "password": Faker().password(),
+            "email": Faker().email()
+        }
+        return cls(**data)
+
+    def get_user(self):
         return {
-            "username": faker.name(),
-            "password": faker.password(),
-            "email": faker.email()
+            "username": self.username,
+            "password": self.password,
+            "email": self.email
         }

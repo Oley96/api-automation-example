@@ -8,34 +8,30 @@ from src.services import UserApiService
 
 @pytest.mark.api
 @pytest.mark.positive
-def test_can_register_user_with_valid_credentials(faker):
-    user = User.get_user(faker)
+def test_can_register_user_with_valid_credentials(fake_user):
 
-    UserApiService().register_customer(user) \
+    UserApiService().register_customer(fake_user) \
         .should_have(status_code(200)) \
         .should_have(only_fields("id"))
 
 
 @pytest.mark.api
 @pytest.mark.negative
-def test_can_not_register_user_with_valid_credentials_twice(faker):
-    user = User.get_user(faker)
+def test_can_not_register_user_with_valid_credentials_twice(fake_user):
 
-    UserApiService().register_customer(user) \
+    UserApiService().register_customer(fake_user) \
         .should_have(status_code(200)) \
         .should_have(only_fields("id"))
 
-    UserApiService().register_customer(user) \
+    UserApiService().register_customer(fake_user) \
         .should_have(status_code(500))
 
 
 @pytest.mark.api
 @pytest.mark.positive
-def test_user_should_login_with_valid_credentials(faker):
-    user = User.get_user(faker)
-
-    UserApiService().register_customer(user)
-    UserApiService().login_with(user) \
+def test_user_should_login_with_valid_credentials(fake_user):
+    UserApiService().register_customer(fake_user)
+    UserApiService().login_with(fake_user) \
         .should_have(status_code(200)) \
         .should_have(content_type("text/html"))
 
@@ -61,9 +57,8 @@ def test_get_customers():
 
 @pytest.mark.api
 @pytest.mark.positive
-def test_get_specific_customer(faker):
-    user = User.get_user(faker)
-    id = UserApiService().register_customer(user).json("id")
+def test_get_specific_customer(fake_user):
+    id = UserApiService().register_customer(fake_user).json("id")
 
     UserApiService().get_customer(id) \
         .should_have(status_code(200)) \
@@ -72,9 +67,8 @@ def test_get_specific_customer(faker):
 
 @pytest.mark.api
 @pytest.mark.positive
-def test_delete_customer_by_id(faker):
-    user = User.get_user(faker)
-    id = UserApiService().register_customer(user).json("id")
+def test_delete_customer_by_id(fake_user):
+    id = UserApiService().register_customer(fake_user).json("id")
 
     UserApiService().delete_customer(id) \
         .should_have(status_code(200)) \
