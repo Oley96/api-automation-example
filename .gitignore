@@ -92,6 +92,7 @@ ENV/
 env.bak/
 venv.bak/
 reports/
+allure-results/
 
 # Spyder project settings
 .spyderproject
