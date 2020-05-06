@@ -1,9 +1,10 @@
 import abc
 import json
 from functools import partial
-
+from jsonschema import validate
 import jsonpath_rw
 from hamcrest import assert_that
+
 
 class Condition(object):
 
@@ -27,7 +28,9 @@ class StatusCodeCondition(Condition):
     def __repr__(self):
         return f"status code is {self._status_code}"
 
+
 status_code = StatusCodeCondition
+
 
 class BodyFieldJsonPathCondition(Condition):
 
@@ -47,7 +50,9 @@ class BodyFieldJsonPathCondition(Condition):
     def __repr__(self):
         return f"body field {self._json_path} {self._matcher}"
 
+
 body = BodyFieldJsonPathCondition
+
 
 class ContentTypeCondition(Condition):
 
@@ -60,6 +65,7 @@ class ContentTypeCondition(Condition):
 
     def match(self, response):
         assert self._content_type in response.headers['Content-Type']
+
 
 content_type = ContentTypeCondition
 
@@ -136,3 +142,20 @@ not_fields = partial(BodyFieldConditions.from_mapping, 'not_fields')
 only_fields = partial(BodyFieldConditions.from_mapping, 'only_fields')
 field_with_value = partial(BodyFieldConditions.from_mapping, 'field_with_value')
 field_contains_value = partial(BodyFieldConditions.from_mapping, 'field_contains_value')
+
+
+class JsonSchemaCondition(Condition):
+
+    def __init__(self, schema):
+        super(JsonSchemaCondition, self).__init__()
+        self._schema = schema
+
+    def __repr__(self):
+        return f"json schema validation: {self._schema}"
+
+    def match(self, response):
+        json = response.json()
+        validate(instance=json, schema=self._schema)
+
+validation_with_json_schema = JsonSchemaCondition
+
