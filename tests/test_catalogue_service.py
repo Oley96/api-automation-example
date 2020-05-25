@@ -2,7 +2,6 @@ from hamcrest import has_length, not_
 from hamcrest.library.collection import is_empty
 import pytest
 from src.conditions import status_code, body, content_type, field_with_value, fields, validation_with_json_schema
-from src.schemas.product_schema import product_schema
 from src.services import CatalogueApiService
 
 
@@ -29,7 +28,7 @@ def test_get_product():
         .should_have(field_with_value("description", product["description"])) \
         .should_have(field_with_value("price", product["price"])) \
         .should_have(fields("tag", "count")) \
-        .should_have(validation_with_json_schema("src/schemas/product_schema.json"))
+        .should_have(validation_with_json_schema("/schemas/product_schema.json"))
 
 
 @pytest.mark.api

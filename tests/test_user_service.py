@@ -1,8 +1,6 @@
 from hamcrest import has_length, greater_than
 import pytest
 from src.conditions import status_code, body, content_type, only_fields, validation_with_json_schema
-from src.models.user import User
-from src.schemas.address_schema import address_schema
 from src.services import UserApiService
 
 
@@ -86,4 +84,4 @@ def test_get_addresses():
         .should_have(body("$._embedded.address[0].street", "my road")) \
         .should_have(body("$._embedded.address[0].country", "UK")) \
         .should_have(body("$._embedded.address[0].city", "London")) \
-        .should_have(validation_with_json_schema("src/schemas/address_schema.json"))
+        .should_have(validation_with_json_schema("/schemas/address_schema.json"))

@@ -4,6 +4,8 @@ from functools import partial
 from jsonschema import validate
 import jsonpath_rw
 from hamcrest import assert_that
+import dotenv
+import os
 
 
 class Condition(object):
@@ -147,6 +149,7 @@ field_contains_value = partial(BodyFieldConditions.from_mapping, 'field_contains
 class JsonSchemaCondition(Condition):
 
     def __init__(self, schema_path):
+        dotenv.load_dotenv()
         super(JsonSchemaCondition, self).__init__()
         self._schema_path = schema_path
 
@@ -155,7 +158,7 @@ class JsonSchemaCondition(Condition):
 
     def match(self, response):
         response_json = response.json()
-        with open(self._schema_path) as file:
+        with open(os.getenv("SCHEMA_PATH") + self._schema_path) as file:
             validate(instance=response_json, schema=json.load(file))
 
 validation_with_json_schema = JsonSchemaCondition
