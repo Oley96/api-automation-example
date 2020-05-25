@@ -1,4 +1,4 @@
-product_schema = {
+{
               "type": "object",
               "properties": {
                 "id": {

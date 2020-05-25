@@ -29,7 +29,7 @@ def test_get_product():
         .should_have(field_with_value("description", product["description"])) \
         .should_have(field_with_value("price", product["price"])) \
         .should_have(fields("tag", "count")) \
-        .should_have(validation_with_json_schema(product_schema))
+        .should_have(validation_with_json_schema("src/schemas/product_schema.json"))
 
 
 @pytest.mark.api

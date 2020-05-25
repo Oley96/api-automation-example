@@ -17,6 +17,7 @@ class User:
         }
         return cls(**data)
 
+    @property
     def get_user(self):
         return {
             "username": self.username,

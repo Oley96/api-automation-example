@@ -86,4 +86,4 @@ def test_get_addresses():
         .should_have(body("$._embedded.address[0].street", "my road")) \
         .should_have(body("$._embedded.address[0].country", "UK")) \
         .should_have(body("$._embedded.address[0].city", "London")) \
-        .should_have(validation_with_json_schema(address_schema))
+        .should_have(validation_with_json_schema("src/schemas/address_schema.json"))
