@@ -10,9 +10,6 @@ import os
 
 class Condition(object):
 
-    def __init__(self):
-        pass
-
     @abc.abstractmethod
     def match(self, response):
         return
@@ -161,5 +158,5 @@ class JsonSchemaCondition(Condition):
         with open(os.getenv("SCHEMA_PATH") + self._schema_path) as file:
             validate(instance=response_json, schema=json.load(file))
 
-validation_with_json_schema = JsonSchemaCondition
 
+validation_with_json_schema = JsonSchemaCondition
