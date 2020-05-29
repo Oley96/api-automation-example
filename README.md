@@ -36,7 +36,7 @@ pytest -m positive, negative </p>
 </div>
 
 <div>
-<h3>To run tests with allure report:</h3>
+<h3>To run tests with allure report</h3>
 <p>chmod +x run.sh<p>
 <p>sh run.sh<p>
 </div>
