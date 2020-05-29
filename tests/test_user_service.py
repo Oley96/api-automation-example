@@ -7,7 +7,6 @@ from src.services import UserApiService
 @pytest.mark.api
 @pytest.mark.positive
 def test_can_register_user_with_valid_credentials(fake_user):
-
     UserApiService().register_customer(fake_user) \
         .should_have(status_code(200)) \
         .should_have(only_fields("id"))
@@ -16,7 +15,6 @@ def test_can_register_user_with_valid_credentials(fake_user):
 @pytest.mark.api
 @pytest.mark.negative
 def test_can_not_register_user_with_valid_credentials_twice(fake_user):
-
     UserApiService().register_customer(fake_user) \
         .should_have(status_code(200)) \
         .should_have(only_fields("id"))
