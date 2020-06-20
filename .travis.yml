@@ -1,0 +1,16 @@
+language: python
+
+python:
+  - "3.7"
+
+services:
+  - docker
+
+before_install:
+  - git clone https://github.com/microservices-demo/microservices-demo
+  - cd microservices-demo
+  - docker-compose -f deploy/docker-compose/docker-compose.yml up -d
+
+
+script:
+  - pytest tests/
