@@ -14,4 +14,4 @@ before_install:
 
 
 script:
-  - pytest ./tests
+  - pytest /home/travis/build/Oley96/python-api-automation-project/tests
