@@ -8,10 +8,7 @@ services:
 
 before_install:
   - pip install -r requirements.txt
-  - git clone https://github.com/microservices-demo/microservices-demo
-  - cd microservices-demo
-  - docker-compose -f deploy/docker-compose/docker-compose.yml up -d
-
-
+  - docker-compose up --force-recreate -d
+  
 script:
-  - pytest /home/travis/build/Oley96/python-api-automation-project/tests
+  - pytest tests/
