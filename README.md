@@ -1,7 +1,7 @@
 <body>
 <!-- -->
 
-<h2>Boilerplate for Python + Pytest + requests + Allure + Travis CI API automation test project</h2>
+<h2>Boilerplate for Python + Pytest + requests + Allure API automation test project</h2>
 
 <div>
 <ul>
