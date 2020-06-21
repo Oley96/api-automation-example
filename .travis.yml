@@ -9,6 +9,7 @@ services:
 before_install:
   - pip install -r requirements.txt
   - docker-compose up --force-recreate -d
+  - docker ps
   
 script:
   - pytest tests/
