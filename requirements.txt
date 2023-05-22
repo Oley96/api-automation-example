@@ -4,6 +4,6 @@ jsonpath-rw==1.4.0
 PyHamcrest==2.0.2
 pytest==5.4.1
 pytest-env==0.6.2
-requests==2.23.0
+requests==2.31.0
 python-dotenv==0.13.0
 jsonschema==3.2.0
